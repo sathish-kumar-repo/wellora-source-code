@@ -1,0 +1,7 @@
+.highlight {
+  background-color: var(--accent-color-tint);
+  color: var(--accent-color);
+  padding: 0 2px;
+  border-radius: 3px;
+  font-weight: bold;
+}

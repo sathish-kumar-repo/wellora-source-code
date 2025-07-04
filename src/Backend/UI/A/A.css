@@ -1,0 +1,11 @@
+.anchor {
+  text-decoration: none;
+  color: var(--accent-color);
+  font-weight: 500;
+  font-size: 1.1rem;
+  word-wrap: break-word;
+}
+
+.anchor:hover {
+  text-decoration: underline;
+}

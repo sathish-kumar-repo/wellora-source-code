@@ -1,0 +1,219 @@
+{
+  "header": {
+    "logo": "Wellora",
+    "moreFolders": "More.."
+  },
+
+  "home": {
+    "title": "Home - Wellora",
+    "description": "Welcome to Wellora – your personal space for self-growth, knowledge, and meaningful living.",
+    "heading": "Thrive with Wellora",
+    "about": "Wellora is your all-in-one hub for personal growth, wellbeing, and life balance. Discover curated insights across wealth, health, habits, mindset, and relationships — all designed to help you live with more clarity, purpose, and confidence. Access trusted resources anytime, stay motivated daily, and transform your lifestyle, one simple step at a time. Join a growing community committed to living smarter, healthier, and more fulfilled lives.",
+    "designedBy": "Created by"
+  },
+
+  "course": {
+    "title": "Courses - Wellora",
+    "description": "Explore guides, tutorials, and courses across life skills, wellness, and personal growth.",
+    "filter": "Filter",
+    "searchPlaceholder": "Search topics...",
+    "learnMore": "Learn More"
+  },
+
+  "tutorial": {
+    "title": "Wellora",
+    "description": "Explore the ${course} tutorial on Wellora",
+    "previous": "Previous",
+    "next": "Next"
+  },
+
+  "notFound": {
+    "title": "404 - Page Not Found",
+    "description": "The page you're looking for doesn’t exist or has moved.",
+    "heading": "Page not found",
+    "subHeading": "We couldn’t find what you’re looking for.",
+    "action": "Return to home"
+  },
+
+  "author": {
+    "title": "Creator - Wellora",
+    "description": "Meet the creator and learn why Wellora exists.",
+    "alt": "Profile",
+    "name": "Sathish Kumar",
+    "bio": "I’m passionate about learning and sharing life-enhancing knowledge on health, wealth, and relationships.",
+    "whatsapp": "Whatsapp me"
+  },
+
+  "privacy": {
+    "title": "Privacy Policy - Wellora",
+    "description": "Learn how we respect and protect your data on Wellora.",
+    "heading": "Privacy Policy",
+    "intro": "Welcome to Wellora! This Privacy Policy outlines how we collect, use, and protect your information. By using our website, you agree to our policy. If you disagree, please refrain from using our platform.",
+    "sections": {
+      "section1": {
+        "title": "1. No Personal Data Collected",
+        "content": "Wellora is committed to protecting your privacy. We do not collect, store, or share any personally identifiable information. Our platform operates entirely without the need for your personal data, allowing you to use it anonymously and securely."
+      },
+      "section2": {
+        "title": "2. Cookies",
+        "content": "We use cookies to enhance your user experience on Wellora. Cookies are small files stored on your device to improve navigation, remember preferences, and provide minimal site analytics. These cookies do not store personal information and are used solely for improving site functionality."
+      },
+      "section3": {
+        "title": "3. Third-Party Links",
+        "content": "You may encounter links to external websites from Wellora. We are not responsible for the content, privacy practices, or security of these third-party sites. We recommend reviewing their privacy policies before engaging with them."
+      },
+      "section4": {
+        "title": "4. Updates to Policy",
+        "content": "This Privacy Policy may be updated periodically. Any changes will be posted immediately on this page. By continuing to use our platform, you agree to any modifications made to this policy, so we encourage you to review it regularly for updates."
+      },
+      "section5": {
+        "title": "5. Contact",
+        "content": "If you have any questions or concerns about this Privacy Policy, or if you need more information about how your data is handled, please feel free to reach out to us via our contact details provided on the website."
+      }
+    }
+  },
+
+  "terms": {
+    "title": "Terms - Wellora",
+    "description": "Understand the terms for using Wellora responsibly.",
+    "heading": "Terms and Conditions",
+    "intro": "Welcome to Wellora! By using our platform, you agree to the following terms and conditions. If you do not agree, please exit the site.",
+    "sections": {
+      "section1": {
+        "title": "1. Intellectual Property",
+        "content": "All content on Wellora, including text, images, and videos, is owned by us unless stated otherwise. You may not reproduce, modify, or reuse any content without our permission."
+      },
+      "section2": {
+        "title": "2. Platform Use",
+        "intro": "You may use Wellora for personal growth and learning only. You agree not to:",
+        "content": {
+          "item1": "Use the platform for illegal activities.",
+          "item2": "Disrupt or damage the functionality of the site.",
+          "item3": "Attempt to hack or gain unauthorized access to restricted sections of the platform."
+        }
+      },
+      "section3": {
+        "title": "3. User Contributions",
+        "content": "Any content you share with us, such as suggestions, feedback, or materials, can be freely used and modified by Wellora for an indefinite period."
+      },
+      "section4": {
+        "title": "4. External Links",
+        "content": "Wellora may include links to third-party websites. We are not responsible for the content or privacy practices of these external sites."
+      },
+      "section5": {
+        "title": "5. Disclaimer",
+        "content": "The information provided on Wellora is for informational and educational purposes only. We do not guarantee specific results and encourage you to apply the content thoughtfully."
+      },
+      "section6": {
+        "title": "6. Limitation of Liability",
+        "content": "Wellora is not liable for any damages or losses arising from the use of this platform. You use the platform at your own risk."
+      },
+      "section7": {
+        "title": "7. Changes to Terms",
+        "content": "We reserve the right to update or modify these terms at any time. Continued use of the platform signifies your acceptance of any changes made."
+      },
+      "section8": {
+        "title": "8. Governing Law",
+        "content": "These terms are governed by the laws of India. Any disputes related to the terms shall be resolved under Indian jurisdiction."
+      },
+      "section9": {
+        "title": "9. Contact Us",
+        "content": "If you have any concerns or questions about these terms, feel free to contact us at <strong>{{email}}</strong>."
+      }
+    }
+  },
+
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "description": "Answers to common questions about Wellora content and offerings.",
+    "faqs": [
+      {
+        "question": "What is Wellora?",
+        "answer": "Wellora is a personal website that provides a diverse range of content, including study materials, tutorials, personal development books, and resources related to health, wealth, lifestyle, and relationships."
+      },
+      {
+        "question": "Is the content available in Tamil and Hindi?",
+        "answer": "Yes, Wellora content is available in English, Tamil, and Hindi to cater to a broader audience and make learning more inclusive."
+      },
+      {
+        "question": "Can I download Wellora Content?",
+        "answer": "Yes! Many PDFs, notes, and other learning resources from Wellora are available for download. Look for the download icons or links on each page to access them."
+      },
+      {
+        "question": "How can I contact you?",
+        "answer": "You can find all contact details for Wellora in the footer section below."
+      },
+      {
+        "question": "What topics are covered on Wellora?",
+        "answer": "Wellora covers a wide range of topics, including academics, personal growth, mental health, wealth-building strategies, lifestyle tips, fitness, and relationship advice."
+      },
+      {
+        "question": "Is all the content free?",
+        "answer": "Yes, all content on Wellora is available for free personal use. Some external resources, such as books or courses, may redirect you to other platforms."
+      },
+      {
+        "question": "Are there any paid courses on Wellora?",
+        "answer": "No, currently all courses and materials on Wellora are free. However, we may link to external paid courses if applicable."
+      },
+      {
+        "question": "How often is the content updated?",
+        "answer": "Wellora content is updated regularly, with new tutorials, books, and resources being added on a weekly basis. Keep an eye on our social media channels for the latest updates."
+      },
+      {
+        "question": "Is there a mobile app for Wellora?",
+        "answer": "At the moment, there is no dedicated mobile app for Wellora. However, the website is fully responsive and optimized for mobile use."
+      },
+      {
+        "question": "Can I contribute or suggest content?",
+        "answer": "Absolutely! Wellora welcomes contributions and suggestions. Use the contact methods above to send your ideas or content for consideration."
+      },
+      {
+        "question": "Do you offer certifications?",
+        "answer": "Currently, Wellora does not offer certifications. However, we do link to certified courses on external platforms when relevant."
+      }
+    ]
+  },
+
+  "pdf": {
+    "title": "PDF Library - Wellora",
+    "description": "Explore downloadable life-enhancing PDFs anytime."
+  },
+
+  "footer": {
+    "about": "About Wellora",
+    "description": "Wellora helps you grow in wealth, health, and relationships – all in one place.",
+    "links": "Quick Links",
+    "privacy": "Privacy Policy",
+    "terms": "Terms and Conditions",
+    "author": "About Us",
+    "faq": "FAQ",
+    "lang": "Lang",
+    "contact": "Chennai, Tamil Nadu, India",
+    "address": "Address",
+    "copyright": "© {{year}} Wellora. All rights reserved.",
+    "courseCopyright": "© {{year}} Wellora. Made with ❤️ in India"
+  },
+
+  "general": {
+    "recentlyAdded": "Recently Added",
+    "clear": "Clear",
+    "topicSearchPlaceholder": "Search topics...",
+    "searchHere": "Search here...",
+    "cancel": "Cancel",
+    "noResults": "No results found for <strong>{{searchTerm}}</strong>"
+  },
+
+  "searchNotFound": {
+    "heading": "Nothing Found",
+    "subheading": "Try adjusting your search. Suggestions:",
+    "ideas1": "Check your spelling",
+    "ideas2": "Use different keywords",
+    "ideas3": "Try more general words"
+  },
+
+  "settings": {
+    "title": "Settings - Wellora",
+    "description": "Customize your Wellora experience.",
+    "privateTab": "Private Tab"
+  }
+}

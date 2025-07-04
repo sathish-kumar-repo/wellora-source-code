@@ -1,0 +1,142 @@
+/* Base Footer */
+.footer-glass {
+  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.2);
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 2rem 2rem 1rem;
+  border-radius: 5px 5px 0 0;
+  color: var(--accent-color);
+  font-size: 0.95rem;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Container and Layout */
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto 1rem;
+}
+
+.footer-section {
+  flex: 1 100px;
+  min-width: 180px;
+}
+
+.footer-section h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+  color: var(--accent-color);
+}
+
+.footer-section p {
+  line-height: 1.6;
+}
+
+/* Links */
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-section a {
+  color: var(--accent-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-section a:hover {
+  text-decoration: underline;
+}
+
+/* Address Section */
+.footer-section address {
+  font-style: normal;
+  line-height: 1.9;
+  margin-top: 0.5rem;
+}
+
+/* Social Media Icons */
+.social-icons {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 0.8rem;
+}
+
+.social-icons img {
+  width: 24px;
+  height: 24px;
+  transition: transform 0.2s ease;
+}
+
+.social-icons img:hover {
+  transform: scale(1.1);
+}
+
+.footer-section .sci {
+  width: fit-content;
+  margin-top: 0.8rem;
+  position: relative;
+  flex-direction: row;
+  align-items: start;
+  left: 0;
+  padding: 0;
+}
+.footer-section .sci li a {
+  width: 35px;
+  height: 35px;
+  margin: 0 10px 0 0;
+}
+
+/* Language Selector (Flag Icons) */
+.language-selector {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+.language-selector img {
+  border: none;
+}
+/* Footer Bottom Row */
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  padding-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.footer-bottom p {
+  margin: 0;
+}
+
+/* Back to Top Button */
+.back-to-top {
+  padding: 2px;
+}
+
+.back-to-top svg {
+  font-size: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+}

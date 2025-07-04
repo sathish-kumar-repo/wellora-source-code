@@ -1,0 +1,97 @@
+.glass-table {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  overflow-x: auto;
+  margin-bottom: var(--content-space);
+}
+
+.glass-table::-webkit-scrollbar {
+  height: 10px;
+}
+
+.glass-table::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.glass-table::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 15px;
+}
+
+.glass-table::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.7);
+}
+/* Add text alignment styles */
+.glass-table.text-align-left table {
+  text-align: left;
+}
+
+.glass-table.text-align-center table {
+  text-align: center;
+}
+
+.glass-table.text-align-right table {
+  text-align: right;
+}
+
+.glass-table table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+.glass-table th,
+.glass-table td {
+  font-family: var(--font-family-body);
+  padding: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  font-size: 1.1rem;
+}
+
+.glass-table th {
+  color: var(--accent-color);
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.glass-table td {
+  color: var(--text-color);
+}
+.glass-table tr:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.glass-table tr:last-child td {
+  border-bottom: none;
+}
+
+@media (max-width: 768px) {
+  .glass-table {
+    padding: 8px;
+  }
+
+  .glass-table th,
+  .glass-table td {
+    padding: 8px;
+    font-size: 1rem;
+  }
+}
+
+/* @media (max-width: 480px) {
+  .glass-table th,
+  .glass-table td {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .glass-table th,
+  .glass-table td {
+    font-size: 0.8rem;
+  }
+} */

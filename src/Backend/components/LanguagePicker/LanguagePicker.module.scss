@@ -1,0 +1,203 @@
+$width: 30px;
+$height: 20px;
+
+@mixin transition($value) {
+  -webkit-transition: $value;
+  -moz-transition: $value;
+  -o-transition: $value;
+  -ms-transition: $value;
+  transition: $value;
+}
+
+@mixin transform($value) {
+  -webkit-transform: $value;
+  -moz-transform: $value;
+  -ms-transform: $value;
+  -o-transform: $value;
+  transform: $value;
+}
+
+.picker {
+  position: relative;
+
+  width: $width;
+  height: $height;
+
+  & .current {
+    position: relative;
+
+    z-index: 1;
+
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  & .language {
+    position: absolute;
+
+    width: $width;
+    height: $height;
+
+    // outline: 1px solid black;
+
+    cursor: pointer;
+
+    & img {
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+
+  & .selector {
+    position: absolute;
+
+    display: flex;
+    flex-wrap: wrap;
+
+    @include transition(all 0.3s ease);
+
+    pointer-events: none;
+
+    & .container {
+      width: 0;
+      height: 0;
+
+      @include transition(all 0.3s ease);
+
+      pointer-events: all;
+    }
+  }
+  &[data-direction="down"] {
+    & .selector {
+      flex-direction: column;
+
+      top: 0;
+    }
+  }
+  &[data-direction="up"] {
+    & .selector {
+      flex-direction: column-reverse;
+
+      bottom: $height;
+    }
+  }
+  &[data-col-direction="left"] {
+    & .selector {
+      flex-wrap: wrap-reverse;
+
+      right: 0;
+    }
+  }
+  &[data-col-direction="right"] {
+    & .selector {
+      left: 0;
+    }
+  }
+
+  &[data-direction="left"] {
+    & .selector {
+      flex-direction: row-reverse;
+
+      right: 0;
+    }
+  }
+  &[data-direction="right"] {
+    & .selector {
+      flex-direction: row;
+
+      left: 0;
+    }
+  }
+  &[data-col-direction="down"] {
+    & .selector {
+      top: 0;
+    }
+  }
+  &[data-col-direction="up"] {
+    & .selector {
+      flex-wrap: wrap-reverse;
+
+      min-width: $width;
+
+      bottom: $height;
+    }
+  }
+
+  /* Not Active */
+  &:not([data-active="true"]) {
+    & .selector {
+      width: 0 !important;
+      height: 0 !important;
+
+      right: $width;
+    }
+  }
+
+  /* Active */
+  &[data-active="true"] {
+    & .selector {
+      & .container {
+        width: $width;
+        height: $height;
+      }
+    }
+
+    &[data-direction="down"] {
+      & .selector {
+        margin-top: $height;
+
+        & .container {
+          margin-top: 10px;
+        }
+      }
+    }
+    &[data-direction="up"] {
+      & .container {
+        margin-bottom: 10px;
+      }
+    }
+    &[data-col-direction="left"] {
+      .container {
+        margin-left: 10px;
+      }
+    }
+    &[data-col-direction="right"] {
+      .container {
+        margin-right: 10px;
+      }
+    }
+
+    &[data-direction="right"] {
+      & .selector {
+        margin-left: $width;
+
+        bottom: 0;
+
+        & .container {
+          margin-left: 10px;
+        }
+      }
+    }
+    &[data-direction="left"] {
+      & .selector {
+        margin-right: $width;
+
+        bottom: 0;
+
+        & .container {
+          margin-right: 10px;
+        }
+      }
+    }
+    &[data-col-direction="down"] {
+      .container {
+      }
+    }
+    &[data-col-direction="up"] {
+      .container {
+      }
+    }
+  }
+}

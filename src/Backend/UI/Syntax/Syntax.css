@@ -1,0 +1,52 @@
+.syntax-container {
+  padding: 10px 15px;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: var(--content-space);
+}
+
+.syntax-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.syntax-header h3 {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--accent-color);
+}
+.syntax-highlighter {
+  margin-top: 10px;
+  border-radius: 10px;
+}
+.buttons {
+  display: flex;
+}
+.syntax-button {
+  padding: 6px;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.syntax-button:active {
+  transform: scale(0.95);
+}
+
+.syntax-button.copied {
+  background: var(--accent-light);
+}
+
+@media (max-width: 500px) {
+  .syntax-header h3 {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 450px) {
+  .share {
+    display: none;
+  }
+}

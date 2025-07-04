@@ -1,0 +1,32 @@
+.quotesContainer {
+  &.glass {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 0.75rem 1.25rem;
+  }
+  margin-bottom: var(--content-space);
+  display: flex;
+  gap: 10px;
+  padding: 0 1.25rem;
+  font-style: italic;
+  font-weight: bolder;
+
+  .arrow,
+  .quote {
+    display: inline-block;
+    font-size: 1.1rem;
+    line-height: 1.8rem;
+  }
+
+  .arrow {
+    color: var(--accent-color);
+    font-weight: bold;
+  }
+
+  .quote {
+    font-family: var(--font-family-body);
+  }
+}

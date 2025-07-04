@@ -1,0 +1,117 @@
+.card {
+  margin: 2rem auto;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  color: var(--accent-light);
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  border-left: 1px solid rgba(255, 255, 255, 0.5);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.banner {
+  width: 100%;
+  max-height: calc(70vw * 9 / 16); // Max 16:9 ratio
+  aspect-ratio: auto;
+  object-fit: contain;
+  display: block;
+  background: #111; // fallback bg if image has transparency
+}
+
+.content {
+  padding: 2rem;
+  text-align: center;
+}
+
+.title {
+  font-size: 1.2rem;
+  color: var(--accent-color);
+  margin-bottom: 0.5rem;
+}
+
+.description {
+  font-size: 1rem;
+  // font-size: clamp(0.95rem, 2.5vw, 1rem); // responsive font size
+  color: var(--accent-color);
+  margin-bottom: 1.5rem;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.button,
+.buttonOutline {
+  padding: 0.75rem 1.5rem;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: 0.3s ease;
+  display: inline-block;
+  background: var(--accent-light);
+  color: var(--accent-color);
+  border: 2px solid var(--accent-light);
+
+  &:hover {
+    background: var(--accent-color);
+    color: var(--accent-light);
+    border-color: var(--accent-color);
+  }
+}
+
+.buttonOutline {
+  background: transparent;
+  border: 2px solid var(--accent-color);
+  color: var(--accent-color);
+
+  &:hover {
+    background: var(--accent-color);
+    color: var(--accent-light);
+  }
+}
+
+@media (max-width: 600px) {
+  .content {
+    padding: 1.5rem;
+  }
+
+  .button,
+  .buttonOutline {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.tags {
+  margin: 0.75rem 0 1.25rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent-color), #ff758c);
+  color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}

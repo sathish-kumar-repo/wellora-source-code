@@ -1,0 +1,44 @@
+.pdf_viewer_page {
+  width: 100%;
+  height: 100vh;
+}
+
+.pdf_glass_item {
+  font-family: "Headland One", serif;
+  width: fit-content;
+  margin-bottom: var(--content-space);
+}
+.name {
+  font-size: 1.1rem;
+  color: var(--accent-color);
+  letter-spacing: 0.1px;
+  text-transform: capitalize;
+  font-weight: 500;
+}
+
+.pdf_info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12px;
+  gap: 0.7rem;
+  color: var(--text-color);
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 0.6rem 0.8rem;
+  cursor: pointer;
+}
+.pdf_info p {
+  transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.pdf_info:hover p {
+  color: var(--accent-color);
+  text-decoration: underline;
+}
+.icon {
+  width: 40px;
+}
