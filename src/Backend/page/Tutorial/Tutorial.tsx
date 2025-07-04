@@ -6,11 +6,8 @@ import {
   useNavigate,
   useParams,
 } from "react-router-dom";
-import Container from "../../components/Container";
 import { Footer } from "../../components/Footer/Footer";
 import { Header } from "../../components/Header/Header";
-import Section from "../../components/Section";
-import "./Tutorial.css";
 import CloseIcon from "@mui/icons-material/Close";
 import { Helmet } from "react-helmet";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -152,101 +149,139 @@ const Tutorial = ({ contentData }: TutorialProps) => {
         />
       </Helmet>
       
-      <Section className="tutorial-section">
+      <div className="min-h-screen bg-white dark:bg-secondary-950 flex flex-col">
         <Header
           onClick={() => setShowSidebar(true)}
           isShowTopicButton={isSinglePage}
         />
 
-        <div className="content-wrapper">
+        <div className="flex flex-1 max-w-screen-2xl mx-auto w-full">
           {/* Backdrop */}
           <Backdrop 
             enable={showSidebar} 
-            className="tutorial-backdrop"
             onClick={() => setShowSidebar(false)}
           />
 
           {/* Content Sidebar */}
           {isSinglePage && (
             <aside
-              className={`content-sidebar ${showSidebar ? "active" : ""}`}
+              className={`
+                fixed inset-y-0 left-0 z-50 w-80 transform transition-transform duration-300 ease-in-out
+                lg:relative lg:inset-auto lg:z-auto lg:translate-x-0 lg:w-80
+                bg-white dark:bg-secondary-900 border-r border-secondary-200 dark:border-secondary-800
+                ${showSidebar ? "translate-x-0" : "-translate-x-full"}
+              `}
               ref={sidebarRef}
             >
-              <div className="sidebar-header">
-                <h1 className="sidebar-title">{contentData.about.name}</h1>
-                <button 
-                  className="sidebar-close" 
-                  onClick={() => setShowSidebar(false)}
-                  aria-label="Close sidebar"
-                >
-                  <CloseIcon />
-                </button>
+              <div className="flex h-full flex-col">
+                <div className="flex items-center justify-between border-b border-secondary-200 dark:border-secondary-800 p-6">
+                  <h1 className="text-lg font-semibold text-secondary-900 dark:text-secondary-100 truncate">
+                    {contentData.about.name}
+                  </h1>
+                  <button 
+                    className="lg:hidden btn btn-ghost btn-sm"
+                    onClick={() => setShowSidebar(false)}
+                    aria-label="Close sidebar"
+                  >
+                    <CloseIcon className="h-5 w-5" />
+                  </button>
+                </div>
+                
+                <nav className="flex-1 overflow-y-auto p-4">
+                  <ul className="space-y-1">
+                    {contentData.route!.map((content, index) => {
+                      const isActive = content.topic === currentTopic;
+                      const indentLevel = content.type === "H2" ? 1 : content.type === "H3" ? 2 : 0;
+                      
+                      return (
+                        <li key={index} ref={isActive ? activeTopicRef : null}>
+                          {content.heading && (
+                            <div className="px-3 py-2 text-xs font-semibold text-secondary-500 dark:text-secondary-400 uppercase tracking-wider">
+                              {content.heading}
+                            </div>
+                          )}
+                          {content.subHeading && (
+                            <div className="px-3 py-1 text-xs text-secondary-600 dark:text-secondary-400 ml-4">
+                              • {content.subHeading}
+                            </div>
+                          )}
+                          <NavLink
+                            to={`/${category}/${contentData.about.name}/${content.topic}`}
+                            className={({ isActive }) => `
+                              block w-full rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200
+                              ${indentLevel === 1 ? "ml-4" : indentLevel === 2 ? "ml-8" : ""}
+                              ${isActive 
+                                ? "bg-primary-50 text-primary-700 dark:bg-primary-950/50 dark:text-primary-400 border-l-2 border-primary-500" 
+                                : "text-secondary-700 hover:bg-secondary-50 dark:text-secondary-300 dark:hover:bg-secondary-800 hover:text-secondary-900 dark:hover:text-secondary-100"
+                              }
+                            `}
+                            onClick={() => {
+                              setCurrentTopic(content.topic);
+                              setShowSidebar(false);
+                              scrollToTop();
+                            }}
+                          >
+                            <div className="flex items-center gap-2">
+                              {indentLevel > 0 && (
+                                <div className="w-1 h-1 rounded-full bg-current opacity-60" />
+                              )}
+                              {capitalizeFirstLetter(content.topic)}
+                            </div>
+                          </NavLink>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </nav>
               </div>
-              
-              <nav className="sidebar-nav">
-                <ul className="nav-list">
-                  {contentData.route!.map((content, index) => {
-                    const isActive = content.topic === currentTopic;
-                    const itemClass = content.type ? `nav-item ${content.type.toLowerCase()}` : "nav-item";
-                    
-                    return (
-                      <li key={index} className={itemClass} ref={isActive ? activeTopicRef : null}>
-                        {content.heading && (
-                          <div className="nav-heading">{content.heading}</div>
-                        )}
-                        {content.subHeading && (
-                          <div className="nav-subheading">{content.subHeading}</div>
-                        )}
-                        <NavLink
-                          className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
-                          end
-                          to={`/${category}/${contentData.about.name}/${content.topic}`}
-                          onClick={() => {
-                            setCurrentTopic(content.topic);
-                            setShowSidebar(false);
-                            scrollToTop();
-                          }}
-                        >
-                          {capitalizeFirstLetter(content.topic)}
-                        </NavLink>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </nav>
             </aside>
           )}
 
           {/* Content Main */}
-          <main className="content-main">
-            <article className="content-article">
-              <Outlet />
+          <main className="flex-1 min-w-0">
+            <div className="max-w-4xl mx-auto px-6 py-8 lg:px-8">
+              <article className="prose prose-secondary dark:prose-invert max-w-none">
+                <Outlet />
+              </article>
               
-              <div className="navigation-buttons">
+              {/* Navigation Buttons */}
+              <div className="flex items-center justify-between mt-12 pt-8 border-t border-secondary-200 dark:border-secondary-800">
                 <button
-                  className={`nav-button ${!previousTopic ? "disabled" : ""}`}
                   onClick={() => handleNavigation(previousTopic)}
                   disabled={!previousTopic}
+                  className={`
+                    flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all duration-200
+                    ${previousTopic 
+                      ? "text-secondary-700 hover:text-secondary-900 dark:text-secondary-300 dark:hover:text-secondary-100 hover:bg-secondary-50 dark:hover:bg-secondary-800" 
+                      : "text-secondary-400 dark:text-secondary-600 cursor-not-allowed"
+                    }
+                  `}
                 >
-                  <ArrowBackIosIcon />
-                  <span className="nav-button-text">{t("tutorial.previous")}</span>
+                  <ArrowBackIosIcon className="h-4 w-4" />
+                  <span className="text-sm">{t("tutorial.previous")}</span>
                 </button>
 
                 <button
-                  className={`nav-button ${!nextTopic ? "disabled" : ""}`}
                   onClick={() => handleNavigation(nextTopic)}
                   disabled={!nextTopic}
+                  className={`
+                    flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all duration-200
+                    ${nextTopic 
+                      ? "text-secondary-700 hover:text-secondary-900 dark:text-secondary-300 dark:hover:text-secondary-100 hover:bg-secondary-50 dark:hover:bg-secondary-800" 
+                      : "text-secondary-400 dark:text-secondary-600 cursor-not-allowed"
+                    }
+                  `}
                 >
-                  <span className="nav-button-text">{t("tutorial.next")}</span>
-                  <ArrowForwardIosIcon />
+                  <span className="text-sm">{t("tutorial.next")}</span>
+                  <ArrowForwardIosIcon className="h-4 w-4" />
                 </button>
               </div>
-            </article>
+            </div>
           </main>
         </div>
         
         <Footer />
-      </Section>
+      </div>
     </>
   );
 };

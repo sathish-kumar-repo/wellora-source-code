@@ -3,7 +3,6 @@ import ClearAllIcon from "@mui/icons-material/ClearAll";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
-import "./Header.css";
 import MainData from "../../../Main/data";
 import { NavLink, useLocation } from "react-router-dom";
 import Search from "../Search/Search";
@@ -64,7 +63,7 @@ export const Header: React.FC<HeaderProps> = ({
 
       const containerWidth = headerEl.clientWidth;
       const homeLink = navRef.current.querySelector("li") as HTMLLIElement;
-      const toggleBuffer = 200; // Increased buffer for theme toggle and other controls
+      const toggleBuffer = 200;
 
       let usedWidth = homeLink?.offsetWidth || 0;
       const visible: string[] = [];
@@ -141,103 +140,152 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <>
-      <header className={`modern-header ${isHomePage ? "home" : "course"}`}>
-        <div className="header-left">
-          {isShowTopicButton && (
-            <button className="header-btn sidebar-toggle lg:hidden" onClick={onClick}>
-              <ClearAllIcon />
-            </button>
-          )}
-          <NavLink to="/" className="header-logo">
-            <span className="logo-text">{t("header.logo")}</span>
-          </NavLink>
-        </div>
-
-        <nav ref={navRef} className="header-nav">
-          <ul className="nav-list">
-            <li>
-              <NavLink
-                to="/"
-                className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
-              >
-                Home
-              </NavLink>
-            </li>
-
-            {visibleFolders.map((folder) => (
-              <li key={folder}>
-                <NavLink 
-                  to={`/${folder}`} 
-                  className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
+      <header className={`sticky top-0 z-50 w-full border-b border-secondary-200 dark:border-secondary-800 bg-white/95 dark:bg-secondary-950/95 backdrop-blur-xl transition-all duration-300 ${
+        isHomePage 
+          ? "relative mx-4 mt-4 rounded-2xl border border-secondary-200/50 dark:border-secondary-700/50 bg-white/80 dark:bg-secondary-900/80 shadow-soft" 
+          : ""
+      }`}>
+        <div className="container-custom">
+          <div className="flex h-16 items-center justify-between">
+            {/* Left section */}
+            <div className="flex items-center gap-4">
+              {isShowTopicButton && (
+                <button 
+                  onClick={onClick}
+                  className="lg:hidden btn btn-ghost btn-sm"
+                  aria-label="Open sidebar"
                 >
-                  {toTitleCase(folder)}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
-        </nav>
+                  <ClearAllIcon className="h-5 w-5" />
+                </button>
+              )}
+              <NavLink 
+                to="/" 
+                className="flex items-center gap-2 text-xl font-bold text-gradient hover:scale-105 transition-transform duration-200"
+              >
+                {t("header.logo")}
+              </NavLink>
+            </div>
 
-        <div className="header-right">
-          <button className="header-btn" onClick={() => setShowSearch(true)}>
-            <SearchIcon />
-          </button>
+            {/* Center navigation */}
+            <nav className="hidden lg:flex items-center space-x-1" ref={navRef}>
+              <ul className="flex items-center space-x-1">
+                <li>
+                  <NavLink
+                    to="/"
+                    className={({ isActive }) => 
+                      `nav-link ${isActive ? "nav-link-active" : ""}`
+                    }
+                  >
+                    Home
+                  </NavLink>
+                </li>
+                {visibleFolders.map((folder) => (
+                  <li key={folder}>
+                    <NavLink 
+                      to={`/${folder}`} 
+                      className={({ isActive }) => 
+                        `nav-link ${isActive ? "nav-link-active" : ""}`
+                      }
+                    >
+                      {toTitleCase(folder)}
+                    </NavLink>
+                  </li>
+                ))}
+              </ul>
+            </nav>
 
-          <ThemeToggle size="sm" />
+            {/* Right section */}
+            <div className="flex items-center gap-2">
+              <button 
+                onClick={() => setShowSearch(true)}
+                className="btn btn-ghost btn-sm"
+                aria-label="Search"
+              >
+                <SearchIcon className="h-5 w-5" />
+              </button>
 
-          {overflowFolders.length > 0 && (
-            <button
-              className="header-btn"
-              onClick={() => setShowOffCanvas(true)}
-            >
-              <MoreHorizIcon />
-            </button>
-          )}
+              <ThemeToggle />
 
-          {isShowTopicButton && (
-            <button className="header-btn sidebar-toggle hidden lg:flex" onClick={onClick}>
-              <ClearAllIcon />
-            </button>
-          )}
+              {overflowFolders.length > 0 && (
+                <button
+                  onClick={() => setShowOffCanvas(true)}
+                  className="btn btn-ghost btn-sm"
+                  aria-label="More options"
+                >
+                  <MoreHorizIcon className="h-5 w-5" />
+                </button>
+              )}
+
+              {isShowTopicButton && (
+                <button 
+                  onClick={onClick}
+                  className="hidden lg:flex btn btn-ghost btn-sm"
+                  aria-label="Toggle sidebar"
+                >
+                  <ClearAllIcon className="h-5 w-5" />
+                </button>
+              )}
+            </div>
+          </div>
         </div>
       </header>
 
+      {/* Search Modal */}
       <Search
         showSearch={showSearch}
         ref={searchRef}
         onClose={() => setShowSearch(false)}
       />
 
+      {/* Backdrop */}
       <Backdrop enable={showOffCanvas} />
 
+      {/* Off-canvas menu */}
       <div
-        className={`header-offcanvas ${showOffCanvas ? "active" : ""}`}
+        className={`fixed inset-y-0 right-0 z-50 w-80 max-w-full transform bg-white dark:bg-secondary-900 shadow-xl transition-transform duration-300 ease-in-out ${
+          showOffCanvas ? "translate-x-0" : "translate-x-full"
+        }`}
         ref={offCanvasRef}
       >
-        <div className="offcanvas-header">
-          <h3>{t("header.moreFolders")}</h3>
-          <button className="header-btn" onClick={() => setShowOffCanvas(false)}>
-            <CloseIcon />
-          </button>
-        </div>
-        <ul className="offcanvas-list">
-          {overflowFolders.map((folder) => {
-            const basePath = location.pathname.split("/")[1];
-            const isActive = basePath === folder;
+        <div className="flex h-full flex-col">
+          <div className="flex items-center justify-between border-b border-secondary-200 dark:border-secondary-700 p-6">
+            <h3 className="text-lg font-semibold text-secondary-900 dark:text-secondary-100">
+              {t("header.moreFolders")}
+            </h3>
+            <button 
+              onClick={() => setShowOffCanvas(false)}
+              className="btn btn-ghost btn-sm"
+              aria-label="Close menu"
+            >
+              <CloseIcon className="h-5 w-5" />
+            </button>
+          </div>
+          <nav className="flex-1 overflow-y-auto p-6">
+            <ul className="space-y-2">
+              {overflowFolders.map((folder) => {
+                const basePath = location.pathname.split("/")[1];
+                const isActive = basePath === folder;
 
-            return (
-              <li key={folder}>
-                <NavLink
-                  to={`/${folder}`}
-                  ref={isActive ? activeItemRef : null}
-                  className={`nav-link ${isActive ? "active" : ""}`}
-                  onClick={() => setShowOffCanvas(false)}
-                >
-                  {toTitleCase(folder)}
-                </NavLink>
-              </li>
-            );
-          })}
-        </ul>
+                return (
+                  <li key={folder}>
+                    <NavLink
+                      to={`/${folder}`}
+                      ref={isActive ? activeItemRef : null}
+                      className={`block w-full rounded-lg px-4 py-3 text-left font-medium transition-colors duration-200 ${
+                        isActive
+                          ? "bg-primary-50 text-primary-700 dark:bg-primary-950/50 dark:text-primary-400"
+                          : "text-secondary-700 hover:bg-secondary-50 dark:text-secondary-300 dark:hover:bg-secondary-800"
+                      }`}
+                      onClick={() => setShowOffCanvas(false)}
+                    >
+                      {toTitleCase(folder)}
+                    </NavLink>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
+        </div>
       </div>
     </>
   );

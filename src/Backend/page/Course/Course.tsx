@@ -1,10 +1,7 @@
-import "./Course.css";
 import { Header } from "../../components/Header/Header";
 import { Footer } from "../../components/Footer/Footer";
 import { useParams } from "react-router-dom";
 import NotFound from "../NotFound/NotFound";
-import Section from "../../components/Section";
-import Container from "../../components/Container";
 import { Helmet } from "react-helmet";
 import { useEffect, useRef, useState } from "react";
 import FilterSidebar from "./components/FilterSidebar/FilterSidebar";
@@ -33,7 +30,6 @@ const Course = () => {
 
   const { t } = useTranslation();
 
-  //! EFFECTS HERE...
   // Track previous window width to manage filter sidebar visibility on resize
   useEffect(() => {
     const handleResize = () => {
@@ -94,10 +90,8 @@ const Course = () => {
     searchParams.delete("sub");
     searchParams.delete("q");
     searchParams.delete("recent");
-    setSearchParams(searchParams); // Reset search params to clear filters
+    setSearchParams(searchParams);
   };
-
-  // Now do getCourseData after all hooks
 
   const courseData = getCourseData(isPrivate);
   const isValidFolder = category && courseData[category];
@@ -107,8 +101,6 @@ const Course = () => {
   }
 
   const categoryCourses = courseData[category];
-
-  // Check if there's only one course
   const onlyOneCourse = categoryCourses.length === 1;
 
   // Group all courses by subcategory
@@ -121,7 +113,7 @@ const Course = () => {
     return groups;
   }, {} as Record<string, CourseType[]>);
 
-  // Filter by search term (case-insensitive)
+  // Filter by search term
   const filteredCourses = Object.entries(groupedCourses).reduce(
     (result, [subCat, courses]) => {
       const filtered = courses.filter((course) =>
@@ -133,7 +125,7 @@ const Course = () => {
     {} as Record<string, CourseType[]>
   );
 
-  // Handle Recently Added: reverse subcategory and course order
+  // Handle Recently Added
   const processedCourses = recentlyAdded
     ? Object.fromEntries(
         Object.entries(filteredCourses)
@@ -142,13 +134,9 @@ const Course = () => {
       )
     : filteredCourses;
 
-  // Get subcategory keys from the processed courses
   const baseSubCategories = Object.keys(processedCourses);
   const subCategories = ["All", ...baseSubCategories];
-
-  // Check if any filter is applied
-  const isAnyFilterApplied =
-    selectedSubCategory !== "All" || recentlyAdded || searchQuery;
+  const isAnyFilterApplied = selectedSubCategory !== "All" || recentlyAdded || searchQuery;
 
   return (
     <>
@@ -157,10 +145,11 @@ const Course = () => {
         <meta name="description" content={t("course.description")} />
       </Helmet>
 
-      <Section className="course-section">
+      <div className="min-h-screen bg-white dark:bg-secondary-950 flex flex-col">
         <Header />
-        <Container className="course-wrapper">
-          {/* Filter Sidebar Component */}
+        
+        <div className="flex flex-1 max-w-screen-2xl mx-auto w-full">
+          {/* Filter Sidebar */}
           {!onlyOneCourse && (
             <FilterSidebar
               category={category}
@@ -176,47 +165,46 @@ const Course = () => {
             />
           )}
 
-          <div className="course-main">
-            {/* Filter Header with Search Bar */}
+          <main className="flex-1 min-w-0 p-6">
+            {/* Filter Header */}
             {!onlyOneCourse && (
-              <div className="filter-header">
-                <div
-                  className="filter-button"
+              <div className="flex flex-col sm:flex-row gap-4 mb-8">
+                <button
                   onClick={() => setToggleFilter((prev) => !prev)}
+                  className="btn btn-secondary flex items-center gap-2 w-fit"
                 >
-                  <h4>{t("course.filter")}</h4>
-                  <span>
-                    <FilterListIcon />
-                  </span>
+                  <FilterListIcon className="h-5 w-5" />
+                  <span className="hidden sm:inline">{t("course.filter")}</span>
+                </button>
+                
+                <div className="flex-1 max-w-md">
+                  <SearchBar
+                    searchTerm={searchQuery}
+                    setSearchTerm={handleSearchQueryChange}
+                    placeholder={t("course.searchPlaceholder")}
+                    inputRef={inputRef}
+                  />
                 </div>
-                <SearchBar
-                  searchTerm={searchQuery}
-                  setSearchTerm={handleSearchQueryChange}
-                  placeholder={t("course.searchPlaceholder")}
-                  inputRef={inputRef}
-                />
               </div>
             )}
 
-            {/* No result found if the filtered courses are empty */}
+            {/* No results */}
             {selectedSubCategory === "All" &&
               Object.values(processedCourses).every((c) => c.length === 0) && (
-                <NoResultFound
-                  searchTerm={searchQuery}
-                  style={{ marginTop: "2rem" }}
-                />
+                <NoResultFound searchTerm={searchQuery} />
               )}
 
-            {/* Course List Component */}
+            {/* Course List */}
             <CourseList
               processedCourses={processedCourses}
               selectedSubCategory={selectedSubCategory}
               searchQuery={searchQuery}
             />
-          </div>
-        </Container>
+          </main>
+        </div>
+        
         <Footer />
-      </Section>
+      </div>
     </>
   );
 };
