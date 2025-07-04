@@ -7,6 +7,7 @@ import SocialMedia from "../../page/Home/Components/SocialMedia";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { useTranslation } from "react-i18next";
 import { email, getYear } from "../../utils/message";
+import ThemeToggle from "../ThemeToggle/ThemeToggle";
 
 const languageNames: Record<string, string> = {
   en: "English",
@@ -24,7 +25,7 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="footer-glass">
+    <footer className="modern-footer">
       <div className="footer-container">
         {/* About */}
         <div className="footer-section">
@@ -71,17 +72,26 @@ export const Footer: React.FC = () => {
           </ul>
         </div>
 
-        {/* Language Section */}
+        {/* Language & Theme Section */}
         <div className="footer-section">
-          <h3>{t("footer.lang")}</h3>
-          <div className="language-selector">
-            <p>{languageNames[lang]}</p>
-            <LanguagePicker
-              direction="up"
-              available={["en", "ta", "hi"]}
-              current={lang}
-              onChange={handleLanguageChange}
-            />
+          <h3>Preferences</h3>
+          <div className="preferences-group">
+            <div className="preference-item">
+              <span>{t("footer.lang")}</span>
+              <div className="language-selector">
+                <span className="current-lang">{languageNames[lang]}</span>
+                <LanguagePicker
+                  direction="up"
+                  available={["en", "ta", "hi"]}
+                  current={lang}
+                  onChange={handleLanguageChange}
+                />
+              </div>
+            </div>
+            <div className="preference-item">
+              <span>Theme</span>
+              <ThemeToggle size="sm" />
+            </div>
           </div>
         </div>
 
@@ -99,9 +109,9 @@ export const Footer: React.FC = () => {
 
       <div className="footer-bottom">
         <p> {t("footer.courseCopyright", { year: getYear })}</p>
-        <span className="toggle-button back-to-top" aria-label="Back to top">
-          <KeyboardArrowUpIcon onClick={scrollToTop} />
-        </span>
+        <button className="back-to-top" onClick={scrollToTop} aria-label="Back to top">
+          <KeyboardArrowUpIcon />
+        </button>
       </div>
 
       {/* SEO Structured Data */}

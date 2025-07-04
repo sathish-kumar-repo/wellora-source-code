@@ -1,11 +1,9 @@
 import styled from "styled-components";
 
 const Section = styled.section`
-  background: url("/wellora/web-images/bg.jpg");
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
+  background-color: var(--primary-bg);
   min-height: 100vh;
+  transition: background-color var(--transition-normal);
 `;
 
 export default Section;

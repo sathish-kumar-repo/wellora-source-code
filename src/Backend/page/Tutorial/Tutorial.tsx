@@ -26,8 +26,8 @@ interface TutorialProps {
 
 const Tutorial = ({ contentData }: TutorialProps) => {
   const { category } = useParams();
-  const [showTopic, setShowTopic] = useState(false);
-  const offCanvasRef = useRef<HTMLDivElement>(null);
+  const [showSidebar, setShowSidebar] = useState(false);
+  const sidebarRef = useRef<HTMLDivElement>(null);
   const activeTopicRef = useRef<HTMLLIElement>(null);
   const navigate = useNavigate();
   const location = useLocation();
@@ -48,15 +48,15 @@ const Tutorial = ({ contentData }: TutorialProps) => {
     setCurrentTopic(getCurrenttopic());
   }, [location]);
 
-  // Close the topic menu when clicking outside
+  // Close the sidebar when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent | TouchEvent) {
       if (
-        showTopic &&
-        offCanvasRef.current &&
-        !offCanvasRef.current.contains(event.target as Node)
+        showSidebar &&
+        sidebarRef.current &&
+        !sidebarRef.current.contains(event.target as Node)
       ) {
-        setShowTopic(false);
+        setShowSidebar(false);
       }
     }
 
@@ -64,7 +64,7 @@ const Tutorial = ({ contentData }: TutorialProps) => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [showTopic]);
+  }, [showSidebar]);
 
   // Scroll to the active topic whenever the current topic changes
   useEffect(() => {
@@ -74,25 +74,29 @@ const Tutorial = ({ contentData }: TutorialProps) => {
         block: "center",
       });
     }
-  }, [currentTopic, showTopic]); // Dependency to update when currentTopic changes
+  }, [currentTopic, showSidebar]);
 
   // Scroll to the top of the page when a new topic is selected
   useEffect(() => {
     scrollToTop();
   }, [currentTopic]);
 
-  // Close the topic menu when the window is resized
+  // Close the sidebar when the window is resized
   useEffect(() => {
-    const handleFn = () => setShowTopic(false);
-    window.addEventListener("resize", handleFn);
-    return () => window.removeEventListener("resize", handleFn);
+    const handleResize = () => {
+      if (window.innerWidth > 1024) {
+        setShowSidebar(false);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   // Find the index of the current topic in the route
   const index = contentData.route!.findIndex(
     (content) => content.topic === currentTopic
   );
-  const currentIndex = index !== -1 ? index : 0; // Default to 0 if not found
+  const currentIndex = index !== -1 ? index : 0;
 
   // Get the previous and next topics based on the current topic's index
   const previousTopic =
@@ -123,8 +127,7 @@ const Tutorial = ({ contentData }: TutorialProps) => {
     if (topic) {
       const newPath = `/${category}/${contentData.about.name}/${topic}`;
       navigate(newPath);
-      setCurrentTopic(topic); // Update the current topic state
-      // scrollToTop(); // Scroll to the top of the page
+      setCurrentTopic(topic);
     }
   };
 
@@ -134,6 +137,7 @@ const Tutorial = ({ contentData }: TutorialProps) => {
   }
 
   const isSinglePage = !(contentData.route!.length === 1);
+
   return (
     <>
       <Helmet>
@@ -147,97 +151,100 @@ const Tutorial = ({ contentData }: TutorialProps) => {
           })}
         />
       </Helmet>
+      
       <Section className="tutorial-section">
         <Header
-          onClick={() => setShowTopic(true)}
+          onClick={() => setShowSidebar(true)}
           isShowTopicButton={isSinglePage}
         />
 
-        <Container className="content-wrapper">
+        <div className="content-wrapper">
           {/* Backdrop */}
-          <Backdrop enable={showTopic} className="tutorial-backdrop" />
+          <Backdrop 
+            enable={showSidebar} 
+            className="tutorial-backdrop"
+            onClick={() => setShowSidebar(false)}
+          />
 
-          {/* Content Topic */}
+          {/* Content Sidebar */}
           {isSinglePage && (
-            <div
-              className={`content-topic ${showTopic ? "active" : undefined}`}
-              ref={offCanvasRef}
+            <aside
+              className={`content-sidebar ${showSidebar ? "active" : ""}`}
+              ref={sidebarRef}
             >
-              <div className="content-topic-header">
-                <h1>{contentData.about.name}</h1>
-                <span>
-                  <CloseIcon onClick={() => setShowTopic(false)} />
-                </span>
+              <div className="sidebar-header">
+                <h1 className="sidebar-title">{contentData.about.name}</h1>
+                <button 
+                  className="sidebar-close" 
+                  onClick={() => setShowSidebar(false)}
+                  aria-label="Close sidebar"
+                >
+                  <CloseIcon />
+                </button>
               </div>
-              <ul>
-                {contentData.route!.map((content, index) => {
-                  const isActive = content.topic === currentTopic;
-                  const indentClass =
-                    content.type === "H2"
-                      ? "topic-h2"
-                      : content.type === "H3"
-                      ? "topic-h3"
-                      : "topic-h1";
-                  return (
-                    <li
-                      key={index}
-                      ref={isActive ? activeTopicRef : null}
-                      className={`topic-item ${indentClass}`}
-                    >
-                      {content.heading && (
-                        <h3 className="topic-heading">{content.heading}</h3>
-                      )}
-                      {content.subHeading && (
-                        <h3 className="topic-subheading">
-                          <span>- </span>
-                          {content.subHeading}
-                        </h3>
-                      )}
-                      <NavLink
-                        className={"my-nav-link"}
-                        end
-                        to={`/${category}/${contentData.about.name}/${content.topic}`}
-                        onClick={() => {
-                          setCurrentTopic(content.topic);
-                          setShowTopic(false);
-                          scrollToTop();
-                        }}
-                      >
-                        {capitalizeFirstLetter(content.topic)}
-                      </NavLink>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
+              
+              <nav className="sidebar-nav">
+                <ul className="nav-list">
+                  {contentData.route!.map((content, index) => {
+                    const isActive = content.topic === currentTopic;
+                    const itemClass = content.type ? `nav-item ${content.type.toLowerCase()}` : "nav-item";
+                    
+                    return (
+                      <li key={index} className={itemClass} ref={isActive ? activeTopicRef : null}>
+                        {content.heading && (
+                          <div className="nav-heading">{content.heading}</div>
+                        )}
+                        {content.subHeading && (
+                          <div className="nav-subheading">{content.subHeading}</div>
+                        )}
+                        <NavLink
+                          className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
+                          end
+                          to={`/${category}/${contentData.about.name}/${content.topic}`}
+                          onClick={() => {
+                            setCurrentTopic(content.topic);
+                            setShowSidebar(false);
+                            scrollToTop();
+                          }}
+                        >
+                          {capitalizeFirstLetter(content.topic)}
+                        </NavLink>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </nav>
+            </aside>
           )}
 
           {/* Content Main */}
-          <div className="content-main">
-            <Outlet />
-            <div className="navigation-buttons">
-              <div
-                className={`navigation-button ${
-                  previousTopic ? "active" : undefined
-                }`}
-                onClick={() => handleNavigation(previousTopic)}
-              >
-                <ArrowBackIosIcon />
-                <span>{t("tutorial.previous")}</span>
-              </div>
+          <main className="content-main">
+            <article className="content-article">
+              <Outlet />
+              
+              <div className="navigation-buttons">
+                <button
+                  className={`nav-button ${!previousTopic ? "disabled" : ""}`}
+                  onClick={() => handleNavigation(previousTopic)}
+                  disabled={!previousTopic}
+                >
+                  <ArrowBackIosIcon />
+                  <span className="nav-button-text">{t("tutorial.previous")}</span>
+                </button>
 
-              <div
-                className={`navigation-button ${
-                  nextTopic ? "active" : undefined
-                }`}
-                onClick={() => handleNavigation(nextTopic)}
-              >
-                <span>{t("tutorial.next")}</span>
-                <ArrowForwardIosIcon />
+                <button
+                  className={`nav-button ${!nextTopic ? "disabled" : ""}`}
+                  onClick={() => handleNavigation(nextTopic)}
+                  disabled={!nextTopic}
+                >
+                  <span className="nav-button-text">{t("tutorial.next")}</span>
+                  <ArrowForwardIosIcon />
+                </button>
               </div>
-            </div>
-          </div>
-        </Container>
+            </article>
+          </main>
+        </div>
+        
         <Footer />
       </Section>
     </>

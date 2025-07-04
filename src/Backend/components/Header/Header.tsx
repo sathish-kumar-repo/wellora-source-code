@@ -2,16 +2,17 @@ import React, { useState, useEffect, useRef, useMemo } from "react";
 import ClearAllIcon from "@mui/icons-material/ClearAll";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import CloseIcon from "@mui/icons-material/Close";
+import SearchIcon from "@mui/icons-material/Search";
 import "./Header.css";
 import MainData from "../../../Main/data";
 import { NavLink, useLocation } from "react-router-dom";
-import SearchIcon from "@mui/icons-material/Search";
 import Search from "../Search/Search";
 import { useTranslation } from "react-i18next";
 import { toTitleCase } from "../../utils/custom_string";
 import Backdrop from "../Backdrop/Backdrop";
 import { usePrivateTab } from "../../context/PrivateTabContext";
 import privateTabs from "../../../Main/private_tabs";
+import ThemeToggle from "../ThemeToggle/ThemeToggle";
 
 interface HeaderProps {
   onClick?: () => void;
@@ -63,7 +64,7 @@ export const Header: React.FC<HeaderProps> = ({
 
       const containerWidth = headerEl.clientWidth;
       const homeLink = navRef.current.querySelector("li") as HTMLLIElement;
-      const toggleBuffer = 60;
+      const toggleBuffer = 200; // Increased buffer for theme toggle and other controls
 
       let usedWidth = homeLink?.offsetWidth || 0;
       const visible: string[] = [];
@@ -74,13 +75,13 @@ export const Header: React.FC<HeaderProps> = ({
         temp.style.visibility = "hidden";
         temp.style.position = "absolute";
         temp.style.whiteSpace = "nowrap";
-        temp.style.fontSize = "1rem";
+        temp.style.fontSize = "0.875rem";
         temp.style.fontWeight = "500";
-        temp.style.padding = "8px 15px";
+        temp.style.padding = "0.75rem 1rem";
         temp.innerText = courseName;
         document.body.appendChild(temp);
 
-        const folderWidth = temp.offsetWidth + 300;
+        const folderWidth = temp.offsetWidth + 20;
         document.body.removeChild(temp);
 
         if (usedWidth + folderWidth + toggleBuffer <= containerWidth) {
@@ -140,53 +141,64 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <>
-      <header className={`header ${isHomePage ? "home" : "course"}`}>
-        <div className="menu-logo">
+      <header className={`modern-header ${isHomePage ? "home" : "course"}`}>
+        <div className="header-left">
           {isShowTopicButton && (
-            <div className="toggle-button logo-toggle" onClick={onClick}>
+            <button className="header-btn sidebar-toggle lg:hidden" onClick={onClick}>
               <ClearAllIcon />
-            </div>
+            </button>
           )}
-          <NavLink to="/" className="logo">
-            {t("header.logo")}
+          <NavLink to="/" className="header-logo">
+            <span className="logo-text">{t("header.logo")}</span>
           </NavLink>
         </div>
 
-        <ul ref={navRef} className="nav-links">
-          {isShowTopicButton && (
-            <li className="toggle-button nav-toggle" onClick={onClick}>
-              <ClearAllIcon />
+        <nav ref={navRef} className="header-nav">
+          <ul className="nav-list">
+            <li>
+              <NavLink
+                to="/"
+                className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
+              >
+                Home
+              </NavLink>
             </li>
-          )}
 
-          <li key="Home">
-            <NavLink
-              to="/"
-              className={({ isActive }) => (isActive ? "active" : "")}
-            >
-              Home
-            </NavLink>
-          </li>
+            {visibleFolders.map((folder) => (
+              <li key={folder}>
+                <NavLink 
+                  to={`/${folder}`} 
+                  className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
+                >
+                  {toTitleCase(folder)}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
-          {visibleFolders.map((folder) => (
-            <li key={folder}>
-              <NavLink to={`/${folder}`}>{toTitleCase(folder)}</NavLink>
-            </li>
-          ))}
-
-          <li className="toggle-button" onClick={() => setShowSearch(true)}>
+        <div className="header-right">
+          <button className="header-btn" onClick={() => setShowSearch(true)}>
             <SearchIcon />
-          </li>
+          </button>
+
+          <ThemeToggle size="sm" />
 
           {overflowFolders.length > 0 && (
-            <li
-              className="toggle-button"
+            <button
+              className="header-btn"
               onClick={() => setShowOffCanvas(true)}
             >
               <MoreHorizIcon />
-            </li>
+            </button>
           )}
-        </ul>
+
+          {isShowTopicButton && (
+            <button className="header-btn sidebar-toggle hidden lg:flex" onClick={onClick}>
+              <ClearAllIcon />
+            </button>
+          )}
+        </div>
       </header>
 
       <Search
@@ -198,16 +210,16 @@ export const Header: React.FC<HeaderProps> = ({
       <Backdrop enable={showOffCanvas} />
 
       <div
-        className={`off-canvas-glass ${showOffCanvas ? "active" : ""}`}
+        className={`header-offcanvas ${showOffCanvas ? "active" : ""}`}
         ref={offCanvasRef}
       >
-        <div className="off-canvas-header">
+        <div className="offcanvas-header">
           <h3>{t("header.moreFolders")}</h3>
-          <span>
-            <CloseIcon onClick={() => setShowOffCanvas(false)} />
-          </span>
+          <button className="header-btn" onClick={() => setShowOffCanvas(false)}>
+            <CloseIcon />
+          </button>
         </div>
-        <ul className="off-canvas-list">
+        <ul className="offcanvas-list">
           {overflowFolders.map((folder) => {
             const basePath = location.pathname.split("/")[1];
             const isActive = basePath === folder;
@@ -217,9 +229,8 @@ export const Header: React.FC<HeaderProps> = ({
                 <NavLink
                   to={`/${folder}`}
                   ref={isActive ? activeItemRef : null}
-                  onClick={() => {
-                    setShowOffCanvas(false);
-                  }}
+                  className={`nav-link ${isActive ? "active" : ""}`}
+                  onClick={() => setShowOffCanvas(false)}
                 >
                   {toTitleCase(folder)}
                 </NavLink>
