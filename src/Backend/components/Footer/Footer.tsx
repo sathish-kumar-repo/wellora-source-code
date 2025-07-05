@@ -23,15 +23,15 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="bg-secondary-50 dark:bg-secondary-900 border-t border-secondary-200 dark:border-secondary-800">
+    <footer className="bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
       <div className="container-custom py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* About */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-secondary-900 dark:text-secondary-100">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
               {t("footer.about")}
             </h3>
-            <p className="text-secondary-600 dark:text-secondary-300 text-sm leading-relaxed">
+            <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
               {t("footer.description")}
             </p>
             <SocialMedia />
@@ -39,7 +39,7 @@ export const Footer: React.FC = () => {
 
           {/* Links */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-secondary-900 dark:text-secondary-100">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
               {t("footer.links")}
             </h3>
             <ul className="space-y-2">
@@ -52,7 +52,7 @@ export const Footer: React.FC = () => {
                 <li key={link.to}>
                   <Link 
                     to={link.to} 
-                    className="text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm transition-colors duration-200"
+                    className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 text-sm transition-colors duration-200 no-underline"
                   >
                     {link.label}
                   </Link>
@@ -63,7 +63,7 @@ export const Footer: React.FC = () => {
                   href="https://sathish-kumar-repo.github.io/Code-Pro/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 text-sm transition-colors duration-200"
+                  className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 text-sm transition-colors duration-200 no-underline"
                 >
                   Code Pro Web
                 </a>
@@ -73,16 +73,16 @@ export const Footer: React.FC = () => {
 
           {/* Preferences */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-secondary-900 dark:text-secondary-100">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
               Preferences
             </h3>
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-secondary-600 dark:text-secondary-300">
+                <span className="text-sm text-gray-600 dark:text-gray-300">
                   {t("footer.lang")}
                 </span>
                 <div className="flex items-center gap-2">
-                  <span className="text-sm text-secondary-900 dark:text-secondary-100">
+                  <span className="text-sm text-gray-900 dark:text-gray-100">
                     {languageNames[lang]}
                   </span>
                   <LanguagePicker
@@ -94,7 +94,7 @@ export const Footer: React.FC = () => {
                 </div>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-secondary-600 dark:text-secondary-300">
+                <span className="text-sm text-gray-600 dark:text-gray-300">
                   Theme
                 </span>
                 <ThemeToggle size="sm" />
@@ -104,14 +104,14 @@ export const Footer: React.FC = () => {
 
           {/* Contact */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-secondary-900 dark:text-secondary-100">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
               Contact
             </h3>
-            <address className="not-italic space-y-2 text-sm text-secondary-600 dark:text-secondary-300">
+            <address className="not-italic space-y-2 text-sm text-gray-600 dark:text-gray-300">
               <div>
                 <a 
                   href={`mailto:${email}`}
-                  className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200"
+                  className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 no-underline"
                 >
                   {email}
                 </a>
@@ -119,7 +119,7 @@ export const Footer: React.FC = () => {
               <div>
                 <a 
                   href="tel:+919566506832"
-                  className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200"
+                  className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 no-underline"
                 >
                   +91-9566506832
                 </a>
@@ -130,8 +130,8 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Bottom */}
-        <div className="flex flex-col sm:flex-row items-center justify-between pt-8 mt-8 border-t border-secondary-200 dark:border-secondary-800">
-          <p className="text-sm text-secondary-500 dark:text-secondary-400">
+        <div className="flex flex-col sm:flex-row items-center justify-between pt-8 mt-8 border-t border-gray-200 dark:border-gray-800">
+          <p className="text-sm text-gray-500 dark:text-gray-400">
             {t("footer.courseCopyright", { year: getYear })}
           </p>
           <button 

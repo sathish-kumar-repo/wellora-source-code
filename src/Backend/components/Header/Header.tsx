@@ -140,9 +140,9 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <>
-      <header className={`sticky top-0 z-50 w-full border-b border-secondary-200 dark:border-secondary-800 bg-white/95 dark:bg-secondary-950/95 backdrop-blur-xl transition-all duration-300 ${
+      <header className={`sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-white/95 dark:bg-gray-950/95 backdrop-blur-xl transition-all duration-300 ${
         isHomePage 
-          ? "relative mx-4 mt-4 rounded-2xl border border-secondary-200/50 dark:border-secondary-700/50 bg-white/80 dark:bg-secondary-900/80 shadow-soft" 
+          ? "relative mx-4 mt-4 rounded-2xl border border-gray-200/50 dark:border-gray-700/50 bg-white/80 dark:bg-gray-900/80 shadow-lg" 
           : ""
       }`}>
         <div className="container-custom">
@@ -160,7 +160,7 @@ export const Header: React.FC<HeaderProps> = ({
               )}
               <NavLink 
                 to="/" 
-                className="flex items-center gap-2 text-xl font-bold text-gradient hover:scale-105 transition-transform duration-200"
+                className="flex items-center gap-2 text-xl font-bold text-gradient hover:scale-105 transition-transform duration-200 no-underline"
               >
                 {t("header.logo")}
               </NavLink>
@@ -242,14 +242,14 @@ export const Header: React.FC<HeaderProps> = ({
 
       {/* Off-canvas menu */}
       <div
-        className={`fixed inset-y-0 right-0 z-50 w-80 max-w-full transform bg-white dark:bg-secondary-900 shadow-xl transition-transform duration-300 ease-in-out ${
+        className={`fixed inset-y-0 right-0 z-50 w-80 max-w-full transform bg-white dark:bg-gray-900 shadow-xl transition-transform duration-300 ease-in-out ${
           showOffCanvas ? "translate-x-0" : "translate-x-full"
         }`}
         ref={offCanvasRef}
       >
         <div className="flex h-full flex-col">
-          <div className="flex items-center justify-between border-b border-secondary-200 dark:border-secondary-700 p-6">
-            <h3 className="text-lg font-semibold text-secondary-900 dark:text-secondary-100">
+          <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 p-6">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
               {t("header.moreFolders")}
             </h3>
             <button 
@@ -271,10 +271,10 @@ export const Header: React.FC<HeaderProps> = ({
                     <NavLink
                       to={`/${folder}`}
                       ref={isActive ? activeItemRef : null}
-                      className={`block w-full rounded-lg px-4 py-3 text-left font-medium transition-colors duration-200 ${
+                      className={`block w-full rounded-lg px-4 py-3 text-left font-medium transition-colors duration-200 no-underline ${
                         isActive
-                          ? "bg-primary-50 text-primary-700 dark:bg-primary-950/50 dark:text-primary-400"
-                          : "text-secondary-700 hover:bg-secondary-50 dark:text-secondary-300 dark:hover:bg-secondary-800"
+                          ? "bg-blue-50 text-blue-700 dark:bg-blue-950/50 dark:text-blue-400"
+                          : "text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800"
                       }`}
                       onClick={() => setShowOffCanvas(false)}
                     >

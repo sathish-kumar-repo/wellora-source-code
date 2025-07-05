@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "./Backdrop.module.css";
 
 interface BackdropProps {
   onClick?: () => void;
@@ -17,7 +16,7 @@ const Backdrop: React.FC<BackdropProps> = ({
   if (enable) {
     return (
       <div
-        className={`${styles.backdrop} ${className || ""}`}
+        className={`fixed inset-0 bg-black/50 backdrop-blur-sm transition-all duration-300 ${className || ""}`}
         style={{ zIndex }}
         onClick={onClick}
       ></div>

@@ -1,5 +1,4 @@
 import { JSX, useEffect, useRef, useState } from "react";
-import "./Search.css";
 import mainData from "../../../Main/data";
 import { Link } from "react-router-dom";
 import SearchBar from "../SearchBar/SearchBar";
@@ -36,12 +35,6 @@ const Search = ({ showSearch, ref, onClose }: SearchProps) => {
   const { t } = useTranslation();
   const { isPrivate } = usePrivateTab();
 
-  // useEffect(() => {
-  //   if (showSearch) {
-  //     inputRef.current?.focus();
-  //   }
-  // }, [showSearch, inputRef]);
-
   useEffect(() => {
     if (showSearch) {
       inputRef.current?.focus();
@@ -73,10 +66,6 @@ const Search = ({ showSearch, ref, onClose }: SearchProps) => {
             route.topic.toLowerCase().includes(searchTerm.toLowerCase())
           ) || [];
 
-        // const matchingRoutes = course.route!.filter((route) =>
-        //   route.topic.toLowerCase().includes(searchTerm.toLowerCase())
-        // );
-
         if (
           matchingRoutes.length > 0 &&
           !seenCourseNames.has(course.about.name)
@@ -99,32 +88,36 @@ const Search = ({ showSearch, ref, onClose }: SearchProps) => {
   };
 
   return (
-    <section className={`search-section ${showSearch ? "active" : ""}`}>
-      <div className="search-container" ref={ref}>
-        <div className="search-header">
+    <div className={`fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm transition-all duration-300 ${showSearch ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
+      <div className="w-full max-w-2xl mx-4 bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden" ref={ref}>
+        <div className="flex items-center gap-4 p-6 border-b border-gray-200 dark:border-gray-700">
           <SearchBar
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
             inputRef={inputRef}
             placeholder={t("general.topicSearchPlaceholder")}
           />
-          <span className="toggle-button cancel" onClick={onClose}>
+          <button
+            onClick={onClose}
+            className="btn btn-ghost btn-sm"
+          >
             {t("general.cancel")}
-          </span>
+          </button>
         </div>
 
-        <div className="search-results" onScroll={handleScroll}>
+        <div className="max-h-96 overflow-y-auto p-6" onScroll={handleScroll}>
           {filteredResults.length > 0 ? (
-            <div className="result-container">
+            <div className="space-y-4">
               {filteredResults.map((result, index) => (
-                <div className="result-card" key={index}>
-                  <h3>{result.name}</h3>
-                  <ul>
+                <div className="card p-4" key={index}>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">{result.name}</h3>
+                  <ul className="space-y-2">
                     {result.routes.map((route, idx) => (
                       <li key={idx}>
                         <Link
                           onClick={onClose}
                           to={`/${result.category}/${result.name}/${route.topic}`}
+                          className="block p-2 rounded-lg text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/50 transition-colors duration-200 no-underline"
                         >
                           <HighlightMatch
                             text={route.topic}
@@ -138,8 +131,8 @@ const Search = ({ showSearch, ref, onClose }: SearchProps) => {
               ))}
             </div>
           ) : (
-            <div className="result-message">
-              <p>
+            <div className="text-center py-8">
+              <p className="text-gray-500 dark:text-gray-400">
                 <Trans
                   i18nKey="general.noResults"
                   values={{ searchTerm }}
@@ -150,7 +143,7 @@ const Search = ({ showSearch, ref, onClose }: SearchProps) => {
           )}
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

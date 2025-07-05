@@ -1,7 +1,6 @@
 import React, { RefObject, useRef } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import ClearIcon from "@mui/icons-material/Clear";
-import "./SearchBar.css";
 import { useTranslation } from "react-i18next";
 
 interface SearchBarProps {
@@ -30,23 +29,26 @@ const SearchBar: React.FC<SearchBarProps> = ({
   };
 
   return (
-    <div className="search-bar">
-      <span className="search-icon">
-        <SearchIcon />
-      </span>
+    <div className="relative flex-1">
+      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        <SearchIcon className="h-5 w-5 text-gray-400" />
+      </div>
       <input
         type="text"
         placeholder={finalPlaceholder}
         onChange={(e) => setSearchTerm(e.target.value.toLowerCase())}
         ref={activeRef}
         value={searchTerm}
+        className="input pl-10 pr-10"
       />
-      <span
-        className={`clear-icon ${searchTerm ? "active" : ""}`}
-        onClick={handleClear}
-      >
-        <ClearIcon />
-      </span>
+      {searchTerm && (
+        <button
+          onClick={handleClear}
+          className="absolute inset-y-0 right-0 pr-3 flex items-center"
+        >
+          <ClearIcon className="h-5 w-5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" />
+        </button>
+      )}
     </div>
   );
 };
