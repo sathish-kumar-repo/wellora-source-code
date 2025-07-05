@@ -1,5 +1,4 @@
 import React from "react";
-import "./List.css";
 
 type ListType = "ordered" | "unordered";
 type OrderedSymbol =
@@ -84,32 +83,31 @@ const List: React.FC<ListProps> = ({
 
   const renderList = (items: ListItemContent[], nested = false) => {
     const ListTag = type === "ordered" ? "ol" : "ul";
+    
+    const baseClasses = `space-y-2 ${nested ? "ml-6 mt-2" : ""} ${
+      glass ? "bg-white/10 backdrop-blur-sm rounded-lg p-4" : ""
+    } ${small ? "text-sm" : ""}`;
 
     return (
-      <ListTag
-        className={`glassmorphic-list ${nested ? "nested" : ""} ${
-          glass ? "glass" : ""
-        } ${small ? "small" : ""}`}
-      >
+      <ListTag className={baseClasses}>
         {items.map((item, index) => {
           const isPlain =
             typeof item === "string" || React.isValidElement(item);
 
           const itemText = isPlain ? item : (item as ListItem).text;
-
           const children = !isPlain && (item as ListItem).children;
 
           return (
-            <li key={index} className="list-item">
-              <span
-                className={`list-symbol ${
-                  type === "unordered" ? "circle-symbol" : "number-symbol"
-                }`}
-              >
-                {type === "ordered" ? `${getOrderedSymbol(index)}.` : ""}
+            <li key={index} className="flex items-start gap-2">
+              <span className="flex-shrink-0 text-primary-600 dark:text-primary-400 font-medium">
+                {type === "ordered" ? `${getOrderedSymbol(index)}.` : "•"}
               </span>
-              {itemText}
-              {children && renderList(children, true)}
+              <div className="flex-1">
+                <div className="text-secondary-700 dark:text-secondary-300">
+                  {itemText}
+                </div>
+                {children && renderList(children, true)}
+              </div>
             </li>
           );
         })}
@@ -117,7 +115,7 @@ const List: React.FC<ListProps> = ({
     );
   };
 
-  return <div className="glassmorphic-list-container">{renderList(items)}</div>;
+  return <div className="my-4">{renderList(items)}</div>;
 };
 
 export default List;

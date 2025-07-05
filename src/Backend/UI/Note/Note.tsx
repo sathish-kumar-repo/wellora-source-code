@@ -1,5 +1,4 @@
 import React from "react";
-import "./Note.css";
 import { A } from "..";
 
 interface NoteProps {
@@ -15,9 +14,9 @@ const Note = ({ children, link }: NoteProps) => {
   }
 
   return (
-    <div className="note-container">
-      <h3>Note:</h3>
-      <div className="notes">
+    <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 my-4">
+      <h3 className="text-blue-800 dark:text-blue-200 font-semibold mb-2">Note:</h3>
+      <div className="text-blue-700 dark:text-blue-300">
         {link ? (
           <>
             Further details can be found at: <A link={link}>{link}</A>

@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "./PreviewCard.module.scss";
 import { myCodeDomain, myLiveDomain } from "../../utils/domain";
 
 interface PreviewCardProps {
@@ -39,29 +38,40 @@ const PreviewCard: React.FC<PreviewCardProps> = ({
   }
 
   return (
-    <div className={styles.card}>
-      <img src={banner} alt="Project banner" className={styles.banner} />
-      <div className={styles.content}>
-        <h3 className={styles.title}>{title}</h3>
+    <div className="bg-white dark:bg-secondary-900 rounded-lg border border-secondary-200 dark:border-secondary-700 overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+      <img 
+        src={banner} 
+        alt="Project banner" 
+        className="w-full h-48 object-cover"
+      />
+      <div className="p-6">
+        <h3 className="text-xl font-bold text-secondary-900 dark:text-secondary-100 mb-3">
+          {title}
+        </h3>
 
         {tags.length > 0 && (
-          <div className={styles.tags}>
+          <div className="flex flex-wrap gap-2 mb-4">
             {tags.map((tag, index) => (
-              <span key={index} className={styles.tag}>
+              <span 
+                key={index} 
+                className="px-3 py-1 bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 text-sm rounded-full"
+              >
                 {tag}
               </span>
             ))}
           </div>
         )}
 
-        <p className={styles.description}>{description}</p>
+        <p className="text-secondary-600 dark:text-secondary-300 mb-6 leading-relaxed">
+          {description}
+        </p>
 
-        <div className={styles.buttons}>
+        <div className="flex gap-3">
           <a
             href={resolvedLiveLink}
             target="_blank"
             rel="noopener noreferrer"
-            className={styles.button}
+            className="flex-1 inline-flex items-center justify-center px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors duration-200"
           >
             🔗 Live Preview
           </a>
@@ -69,7 +79,7 @@ const PreviewCard: React.FC<PreviewCardProps> = ({
             href={resolvedCodeLink}
             target="_blank"
             rel="noopener noreferrer"
-            className={styles.buttonOutline}
+            className="flex-1 inline-flex items-center justify-center px-4 py-2 border border-primary-600 text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/20 font-medium rounded-lg transition-colors duration-200"
           >
             💻 Source Code
           </a>
