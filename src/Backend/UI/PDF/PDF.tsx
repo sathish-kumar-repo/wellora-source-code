@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import styles from "./style.module.css";
 import {
   DomainKey,
   resolveDomainKeyFromProps,
@@ -24,9 +23,8 @@ const PDF: React.FC<PDFViewProps> = (props) => {
   // ❌ Prevent misuse
   if (file && customDomain && resolvedKey) {
     return (
-      <div className={styles.pdf_glass_item}>
-        ❌ Error: Use only one of `customDomain` or a domain key (`a`, `b`,
-        etc.)
+      <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 text-red-700 dark:text-red-400">
+        ❌ Error: Use only one of `customDomain` or a domain key (`a`, `b`, etc.)
       </div>
     );
   }
@@ -39,17 +37,22 @@ const PDF: React.FC<PDFViewProps> = (props) => {
   };
 
   return (
-    <div className={styles.pdf_glass_item}>
+    <div className="bg-white dark:bg-secondary-900 rounded-lg border border-secondary-200 dark:border-secondary-700 p-4 mb-4">
       {(name || heading) && (
-        <p className={styles.name}>{name || "Reference"}</p>
+        <p className="text-lg font-medium text-secondary-900 dark:text-secondary-100 mb-3">
+          {name || "Reference"}
+        </p>
       )}
-      <div className={styles.pdf_info} onClick={openViewer}>
+      <div 
+        className="flex items-center gap-3 cursor-pointer hover:bg-secondary-50 dark:hover:bg-secondary-800 p-3 rounded-lg transition-colors duration-200"
+        onClick={openViewer}
+      >
         <img
-          className={styles.icon}
+          className="w-10 h-10 flex-shrink-0"
           src="/wellora/web-images/pdf.png"
           alt="pdf icon"
         />
-        <p className={styles.url}>
+        <p className="text-secondary-700 dark:text-secondary-300 font-medium truncate">
           {file.substring(file.lastIndexOf("/") + 1)}
         </p>
       </div>

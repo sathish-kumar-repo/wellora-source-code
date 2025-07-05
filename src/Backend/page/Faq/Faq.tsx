@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./Faq.css";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import Section from "../../components/Section";
@@ -21,32 +20,38 @@ const Faq: React.FC = () => {
   };
 
   return (
-    <Section className="faq-section">
-      <div className="faq-container">
-        <h2 className="faq-title">{t("faq.title")}</h2>
-        <div className="faq-list">
+    <Section className="min-h-screen bg-white dark:bg-secondary-950 py-12">
+      <div className="container mx-auto px-4 max-w-4xl">
+        <h2 className="text-3xl font-bold text-center text-secondary-900 dark:text-secondary-100 mb-12">
+          {t("faq.title")}
+        </h2>
+        <div className="space-y-4">
           {faqs.map((faq, index) => {
             const isActive = index === activeIndex;
             return (
               <div
                 key={index}
-                className={`faq-item ${isActive ? "active" : ""}`}
-                onClick={() => toggleFAQ(index)}
+                className="bg-white dark:bg-secondary-900 rounded-lg border border-secondary-200 dark:border-secondary-700 overflow-hidden"
               >
-                <div className="faq-header">
-                  <div className="faq-question">{faq.question}</div>
-                  <div className="faq-icon">
-                    {isActive ? <RemoveIcon /> : <AddIcon />}
-                  </div>
-                </div>
-                <div
-                  className="faq-answer-wrapper"
-                  style={{
-                    maxHeight: isActive ? "200px" : "0",
-                    overflow: "hidden",
-                  }}
+                <button
+                  className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-secondary-50 dark:hover:bg-secondary-800 transition-colors duration-200"
+                  onClick={() => toggleFAQ(index)}
                 >
-                  <div className="faq-answer">{faq.answer}</div>
+                  <span className="font-semibold text-secondary-900 dark:text-secondary-100 pr-4">
+                    {faq.question}
+                  </span>
+                  <span className="text-primary-600 dark:text-primary-400 flex-shrink-0">
+                    {isActive ? <RemoveIcon /> : <AddIcon />}
+                  </span>
+                </button>
+                <div
+                  className={`overflow-hidden transition-all duration-300 ${
+                    isActive ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                  }`}
+                >
+                  <div className="px-6 pb-4 text-secondary-600 dark:text-secondary-300 leading-relaxed">
+                    {faq.answer}
+                  </div>
                 </div>
               </div>
             );

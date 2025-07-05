@@ -6,7 +6,6 @@ import "@react-pdf-viewer/core/lib/styles/index.css";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 import { useSearchParams } from "react-router-dom";
 import NotFound from "../../page/NotFound/NotFound";
-import styles from "./style.module.css";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
@@ -58,7 +57,7 @@ const PDFViewerPage: React.FC = () => {
         <title>{t("pdf.title")}</title>
         <meta name="description" content={t("pdf.description")} />
       </Helmet>
-      <div className={styles.pdf_viewer_page}>
+      <div className="w-full h-screen">
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
           <Viewer
             fileUrl={fullPdfUrl}
