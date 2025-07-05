@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "./Para.module.css";
 import { A } from "..";
 
 interface ParaProps {
@@ -26,17 +25,17 @@ const Para: React.FC<ParaProps> = ({
   align = "justify",
 }) => {
   const classNames = [
-    styles.para,
-    tab && styles.tabbed,
-    bold && styles.bold,
-    italic && styles.italic,
-    underline && styles.underline,
-    strikethrough && styles.strikethrough,
-    code && styles.codeStyle,
-    align === "justify" && styles.justify,
-    align === "center" && styles.center,
-    align === "right" && styles.right,
-    align === "left" && styles.left,
+    "text-secondary-700 dark:text-secondary-300 text-lg leading-relaxed mb-4",
+    tab && "indent-8",
+    bold && "font-bold",
+    italic && "italic",
+    underline && "underline",
+    strikethrough && "line-through",
+    code && "font-mono bg-secondary-100 dark:bg-secondary-800 px-2 py-1 rounded",
+    align === "justify" && "text-justify",
+    align === "center" && "text-center",
+    align === "right" && "text-right",
+    align === "left" && "text-left",
   ]
     .filter(Boolean)
     .join(" ");

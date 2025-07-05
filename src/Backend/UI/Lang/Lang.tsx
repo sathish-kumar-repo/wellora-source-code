@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import ReactPaginate from "react-paginate";
 import Table from "../Table/Table";
-import styles from "./Lang.module.scss";
 import HighlightMatch from "../../components/HighlightMatch";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import TableIcon from "@mui/icons-material/Window";
@@ -124,8 +123,8 @@ const Lang: React.FC<LangProps> = ({
   }, [currentPage, pageCount]);
 
   return (
-    <div className={styles.wrapper} ref={containerRef}>
-      <div className={styles.controls}>
+    <div className="mb-8" ref={containerRef}>
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-8">
         <SearchBar
           searchTerm={searchTerm}
           setSearchTerm={(value) => {
@@ -133,27 +132,29 @@ const Lang: React.FC<LangProps> = ({
             setCurrentPage(0);
           }}
         />
-        <span
-          className={`toggle-button ${styles.toggleBtn}`}
+        <button
+          className="btn btn-secondary flex items-center gap-2 px-6 py-3"
           onClick={() => {
             setViewType(viewType === "Sentence" ? "Table" : "Sentence");
             setCurrentPage(0);
           }}
         >
           {viewType === "Sentence" ? <TableIcon /> : <SentenceIcon />}
-        </span>
+        </button>
       </div>
 
       {filtered.length === 0 ? (
-        <div className={styles.noResult}>No result found.</div>
+        <div className="text-center text-lg text-secondary-600 dark:text-secondary-400 py-8">
+          No result found.
+        </div>
       ) : viewType === "Sentence" ? (
-        <div className={styles.sentenceContainer}>
+        <div className="space-y-4">
           {pageItems.map((sentence, index) => (
-            <div className={styles.sentence} key={`sentence-${index}`}>
-              <div className={styles.primary}>
+            <div className="card p-6" key={`sentence-${index}`}>
+              <div className="text-secondary-900 dark:text-secondary-100 mb-2">
                 <HighlightMatch text={sentence.eng} query={searchTerm} />
               </div>
-              <div className={styles.secondary}>
+              <div className="text-secondary-700 dark:text-secondary-300">
                 <HighlightMatch text={sentence.tam} query={searchTerm} />
               </div>
             </div>
@@ -183,21 +184,28 @@ const Lang: React.FC<LangProps> = ({
       )}
 
       {pageCount > 1 && (
-        <ReactPaginate
-          breakLabel="..."
-          nextLabel={<ArrowForwardIosIcon />}
-          previousLabel={<ArrowBackIosIcon />}
-          onPageChange={handlePageClick}
-          pageRangeDisplayed={paginationSettings.pageRangeDisplayed}
-          marginPagesDisplayed={paginationSettings.marginPagesDisplayed}
-          pageCount={pageCount}
-          containerClassName={styles.pagination}
-          activeClassName={styles.activePage}
-          disabledClassName={styles.disabled}
-          nextClassName={styles.btn}
-          previousClassName={styles.btn}
-          forcePage={safePage}
-        />
+        <div className="flex justify-center mt-8">
+          <ReactPaginate
+            breakLabel="..."
+            nextLabel={<ArrowForwardIosIcon />}
+            previousLabel={<ArrowBackIosIcon />}
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={paginationSettings.pageRangeDisplayed}
+            marginPagesDisplayed={paginationSettings.marginPagesDisplayed}
+            pageCount={pageCount}
+            containerClassName="flex items-center gap-2"
+            pageClassName="inline-block"
+            pageLinkClassName="px-3 py-2 rounded-lg text-secondary-700 dark:text-secondary-300 hover:bg-secondary-100 dark:hover:bg-secondary-800 transition-colors"
+            activeClassName="bg-primary-500 text-white"
+            activeLinkClassName="bg-primary-500 text-white hover:bg-primary-600"
+            disabledClassName="opacity-50 cursor-not-allowed"
+            nextClassName="inline-block"
+            previousClassName="inline-block"
+            nextLinkClassName="px-3 py-2 rounded-lg text-secondary-700 dark:text-secondary-300 hover:bg-secondary-100 dark:hover:bg-secondary-800 transition-colors"
+            previousLinkClassName="px-3 py-2 rounded-lg text-secondary-700 dark:text-secondary-300 hover:bg-secondary-100 dark:hover:bg-secondary-800 transition-colors"
+            forcePage={safePage}
+          />
+        </div>
       )}
     </div>
   );

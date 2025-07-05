@@ -1,5 +1,4 @@
 import React, { useMemo } from "react";
-import "./Media.scss";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
 import IconButton from "@mui/material/IconButton";
@@ -99,7 +98,7 @@ const Media: React.FC<MediaProps> = (props) => {
 
   if (customDomain && resolvedKey) {
     return (
-      <div className="media-container error-message">
+      <div className="card p-4 border-error-200 bg-error-50 text-error-700 mb-6">
         ❌ Error: Use only one of `customDomain` or a boolean domain flag like
         `a`, `b`, `c`.
       </div>
@@ -166,48 +165,55 @@ const Media: React.FC<MediaProps> = (props) => {
     }
   };
 
+  const containerClasses = clsx(
+    "mb-6",
+    responsive && "lg:w-1/2",
+    groupImg && !responsive && "columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-4"
+  );
+
+  const mediaWrapperClasses = "card overflow-hidden cursor-pointer transition-transform hover:scale-105 mb-4";
+
   return (
-    <div
-      className={clsx("media-container", {
-        responsive: responsive,
-        "group-img": groupImg && !responsive,
-      })}
-    >
+    <div className={containerClasses}>
       {/* Videos */}
       {videos.map((videoSrc, index) => (
-        <div className="media-wrapper" key={`video-${index}`}>
+        <div className={mediaWrapperClasses} key={`video-${index}`}>
           <video
             src={videoSrc}
             poster={poster}
             controls
             crossOrigin="anonymous"
             preload="metadata"
-            className={clsx(movie && "movie")}
+            className={clsx("w-full h-auto", movie && "aspect-video object-contain bg-black")}
           />
         </div>
       ))}
 
       {/* YouTube */}
       {youtubeVideos.map((ytSrc, index) => (
-        <div className="media-wrapper iframe-wrapper" key={`yt-${index}`}>
-          <iframe
-            src={getYouTubeEmbedUrl(ytSrc)}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;"
-            allowFullScreen
-            title={`youtube-video-${index}`}
-            loading="lazy"
-          />
+        <div className={mediaWrapperClasses} key={`yt-${index}`}>
+          <div className="relative w-full aspect-video">
+            <iframe
+              src={getYouTubeEmbedUrl(ytSrc)}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;"
+              allowFullScreen
+              title={`youtube-video-${index}`}
+              loading="lazy"
+              className="absolute inset-0 w-full h-full rounded-lg"
+            />
+          </div>
         </div>
       ))}
 
       {/* Audios */}
       {audios.map((audioSrc, index) => (
-        <div className="media-wrapper audio-wrapper" key={`audio-${index}`}>
+        <div className={`${mediaWrapperClasses} p-4`} key={`audio-${index}`}>
           <audio
             src={audioSrc}
             controls
             crossOrigin="anonymous"
             preload="metadata"
+            className="w-full"
           />
         </div>
       ))}
@@ -241,10 +247,13 @@ const Media: React.FC<MediaProps> = (props) => {
             </>
           )}
         >
-          <div className="media-group-img">
+          <div className={groupImg ? "break-inside-avoid" : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"}>
             {images.map((imgSrc, index) => (
               <div
-                className="media-wrapper image-wrapper"
+                className={clsx(
+                  mediaWrapperClasses,
+                  groupImg && "break-inside-avoid mb-4"
+                )}
                 key={`image-${index}`}
               >
                 <PhotoView src={imgSrc}>
@@ -252,7 +261,10 @@ const Media: React.FC<MediaProps> = (props) => {
                     src={imgSrc}
                     alt={alt}
                     loading="lazy"
-                    className={clsx(movie && "movie")}
+                    className={clsx(
+                      "w-full h-auto object-cover",
+                      movie && "aspect-video object-contain bg-black"
+                    )}
                   />
                 </PhotoView>
               </div>

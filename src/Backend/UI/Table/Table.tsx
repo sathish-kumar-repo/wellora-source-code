@@ -2,7 +2,6 @@
 
 import { FC, ReactNode, useEffect, useState } from "react";
 import * as XLSX from "xlsx";
-import "./Table.css";
 import {
   DomainKey,
   resolveDomainKeyFromProps,
@@ -41,7 +40,7 @@ const Table: FC<TableProps> = (props) => {
   // ❌ Error: if both are set
   if (file && customDomain && resolvedKey) {
     return (
-      <div className="glass-table error-message">
+      <div className="card p-4 border-error-200 bg-error-50 text-error-700">
         ❌ Error: Use only one of `customDomain` or a boolean domain flag (like
         `a`, `b`, `c`).
       </div>
@@ -50,7 +49,7 @@ const Table: FC<TableProps> = (props) => {
 
   if (file && children) {
     return (
-      <div className="glass-table error-message">
+      <div className="card p-4 border-warning-200 bg-warning-50 text-warning-700">
         ⚠️ Error: Provide either `file` or `children`, not both.
       </div>
     );
@@ -69,33 +68,6 @@ const Table: FC<TableProps> = (props) => {
       const ws = wb.Sheets[wsname];
       const jsonData = XLSX.utils.sheet_to_json(ws, { header: 1 });
 
-      // if (jsonData.length > 0) {
-      //   const [headerRow, ...bodyRows] = jsonData as (string[] | any[])[];
-      //   setHeaders(headerRow as string[]);
-      //   const formattedData = bodyRows
-      //     .filter((row, idx) => {
-      //       const isValid = Array.isArray(row) && row.length > 0;
-      //       if (!isValid) {
-      //         console.warn(`⚠️ Skipping invalid row at index ${idx + 1}:`, row);
-      //       }
-      //       return isValid;
-      //     })
-      //     .map((row, _) => {
-      //       const entries = headerRow.map((header, i) => {
-      //         const value = row[i] !== undefined ? row[i] : "";
-      //         return [header, value];
-      //       });
-
-      //       // Ensure every entry is a valid [key, value] pair
-      //       const validEntries = entries.filter(
-      //         (entry) => Array.isArray(entry) && entry.length === 2
-      //       );
-
-      //       return Object.fromEntries(validEntries);
-      //     });
-
-      //   setData(formattedData);
-      // }
       if (jsonData.length > 0) {
         const [headerRow, ...bodyRows] = jsonData as (string[] | any[])[];
         setHeaders(headerRow as string[]);
@@ -127,15 +99,21 @@ const Table: FC<TableProps> = (props) => {
     }
   }, [file, children, resolvedKey, customDomain]);
 
+  const alignmentClass = {
+    left: "text-left",
+    center: "text-center", 
+    right: "text-right"
+  }[textAlign];
+
   return (
-    <div className={`glass-table text-align-${textAlign}`}>
-      <table>
+    <div className="card overflow-x-auto mb-6">
+      <table className={`w-full border-collapse min-w-full ${alignmentClass}`}>
         {file ? (
           <>
             {loading ? (
               <thead>
                 <tr>
-                  <td colSpan={headers.length} style={{ textAlign }}>
+                  <td colSpan={headers.length} className={`p-4 ${alignmentClass}`}>
                     ⏳ Loading...
                   </td>
                 </tr>
@@ -143,7 +121,7 @@ const Table: FC<TableProps> = (props) => {
             ) : error ? (
               <thead>
                 <tr>
-                  <td colSpan={headers.length} style={{ textAlign }}>
+                  <td colSpan={headers.length} className={`p-4 text-error-600 ${alignmentClass}`}>
                     {error}
                   </td>
                 </tr>
@@ -151,9 +129,9 @@ const Table: FC<TableProps> = (props) => {
             ) : (
               <>
                 <thead>
-                  <tr>
+                  <tr className="border-b border-secondary-200 dark:border-secondary-700">
                     {headers.map((header, index) => (
-                      <th key={index} className="table-header">
+                      <th key={index} className="p-3 font-semibold text-secondary-900 dark:text-secondary-100 uppercase tracking-wider text-sm">
                         {header}
                       </th>
                     ))}
@@ -161,9 +139,9 @@ const Table: FC<TableProps> = (props) => {
                 </thead>
                 <tbody>
                   {data.map((row, i) => (
-                    <tr key={i}>
+                    <tr key={i} className="border-b border-secondary-100 dark:border-secondary-800 hover:bg-secondary-50 dark:hover:bg-secondary-800/50 transition-colors">
                       {headers.map((header, j) => (
-                        <td key={j} className="table-cell">
+                        <td key={j} className="p-3 text-secondary-700 dark:text-secondary-300">
                           {row[header]}
                         </td>
                       ))}

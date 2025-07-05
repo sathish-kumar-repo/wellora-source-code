@@ -11,7 +11,6 @@ import { Language } from "./Language";
 import ShareIcon from "@mui/icons-material/Share";
 import DoneIcon from "@mui/icons-material/Done";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import "./Syntax.css";
 import { useCopyToClipboard } from "./useCopyToClipboard";
 
 interface SyntaxProps extends Record<string, any> {
@@ -44,18 +43,18 @@ const Syntax: FC<SyntaxProps> = (props) => {
   // Error if both code and src given
   if (codeProp !== undefined && src !== undefined) {
     return (
-      <pre className="glass-table error-message">
+      <div className="card p-4 border-error-200 bg-error-50 text-error-700 mb-6">
         ❌ Error: Provide either `code` (inline) or `src` (URL), but not both.
-      </pre>
+      </div>
     );
   }
 
   if (src && customDomain && resolvedKey) {
     return (
-      <pre className="glass-table error-message">
+      <div className="card p-4 border-error-200 bg-error-50 text-error-700 mb-6">
         ❌ Error: Use only one of `customDomain` or a boolean domain flag (like
         `a`, `b`, `c`).
-      </pre>
+      </div>
     );
   }
 
@@ -113,41 +112,49 @@ const Syntax: FC<SyntaxProps> = (props) => {
   if (!src && !code) return null;
 
   return (
-    <div className={"syntax-container"}>
+    <div className="card overflow-hidden mb-6">
       {loading ? (
-        <pre>⏳ Loading...</pre>
+        <div className="p-4 text-center">⏳ Loading...</div>
       ) : error ? (
-        <pre>{error}</pre>
+        <div className="p-4 text-error-600">{error}</div>
       ) : (
         <>
-          <div className="syntax-header">
-            <h3>{title}</h3>
-            <div className="buttons">
-              <span
+          <div className="flex items-center justify-between p-4 border-b border-secondary-200 dark:border-secondary-700">
+            <h3 className="text-lg font-semibold text-secondary-900 dark:text-secondary-100">
+              {title}
+            </h3>
+            <div className="flex items-center gap-2">
+              <button
                 onClick={() => copy(code)}
-                className={`toggle-button syntax-button ${
-                  copied ? "copied" : ""
+                className={`btn btn-ghost btn-sm transition-colors ${
+                  copied ? "text-success-600" : ""
                 }`}
               >
                 {copied ? <DoneIcon /> : <ContentCopyIcon />}
-              </span>
-              <span
-                className="toggle-button syntax-button share"
+              </button>
+              <button
+                className="btn btn-ghost btn-sm hidden sm:flex"
                 onClick={handleShare}
               >
                 <ShareIcon />
-              </span>
+              </button>
             </div>
           </div>
 
-          <SyntaxHighlighter
-            className="syntax-highlighter"
-            language={language}
-            style={theme}
-            showLineNumbers={showLineNumbers}
-          >
-            {code}
-          </SyntaxHighlighter>
+          <div className="overflow-x-auto">
+            <SyntaxHighlighter
+              language={language}
+              style={theme}
+              showLineNumbers={showLineNumbers}
+              customStyle={{
+                margin: 0,
+                borderRadius: 0,
+                background: 'transparent'
+              }}
+            >
+              {code}
+            </SyntaxHighlighter>
+          </div>
         </>
       )}
     </div>
